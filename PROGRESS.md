@@ -1,20 +1,20 @@
 ## ARTHA V1 Build Progress
 
-Last completed step: L0.S003
+Last completed step: L0.S006
 Date: 2026-07-04
-Status: partial
+Status: done
 
 ### Currently blocked on (if any):
 - None
 
 ### Layer completion:
-- [/] Layer 0 — Bootstrap
+- [x] Layer 0 — Bootstrap
   - [x] L0.S001 — Create repo, init git, .gitignore, README.md, requirements.txt, .env.example
   - [x] L0.S002 — Create skeleton folders and __init__.py files
   - [x] L0.S003 — Create RESEARCH_LEDGER.md
   - [x] L0.S004 — Create PROGRESS.md
-  - [ ] L0.S005 — Set up python virtual environment, pin python version
-  - [ ] L0.S006 — Read Section 3 of this document Part 1 (Agent Operating Manual)
+  - [x] L0.S005 — Set up python virtual environment, pin python version
+  - [x] L0.S006 — Read Section 3 of this document Part 1 (Agent Operating Manual)
 - [ ] Layer 1 — Core infra
 - [ ] Layer 2 — Data ingestion
 - [ ] Layer 3 — Alpha/signal models
