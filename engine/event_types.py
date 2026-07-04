@@ -49,3 +49,14 @@ class FillEvent(Event):
     fill_price: float = 0.0
     commission: float = 0.0
     slippage: float = 0.0
+
+@dataclass
+class SystemStartedEvent(Event):
+    """Event fired when the kernel starts up successfully."""
+    env: str = ""
+
+@dataclass
+class SystemStoppedEvent(Event):
+    """Event fired when the kernel is shutting down."""
+    reason: str = "normal"
+
