@@ -1,0 +1,10 @@
+[general]
+env = "development"
+log_level = "INFO"
+
+[database]
+sqlite_db_path = "data/market.db"
+
+[broker]
+openalgo_api_url = "http://localhost:5000"
+openalgo_api_key = "your-openalgo-key-here"
