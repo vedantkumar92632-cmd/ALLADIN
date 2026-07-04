@@ -1,8 +1,8 @@
 ## ARTHA V1 Build Progress
 
-Last completed step: L0.S006
+Last completed step: L1.S001
 Date: 2026-07-04
-Status: done
+Status: partial
 
 ### Currently blocked on (if any):
 - None
@@ -15,7 +15,9 @@ Status: done
   - [x] L0.S004 — Create PROGRESS.md
   - [x] L0.S005 — Set up python virtual environment, pin python version
   - [x] L0.S006 — Read Section 3 of this document Part 1 (Agent Operating Manual)
-- [ ] Layer 1 — Core infra
+- [/] Layer 1 — Core infra
+  - [x] L1.S001 — Implement core/logger
+  - [ ] L1.S002 — Implement core/time_utils
 - [ ] Layer 2 — Data ingestion
 - [ ] Layer 3 — Alpha/signal models
 - [ ] Layer 4 — Risk management
