@@ -1,6 +1,6 @@
 ## ARTHA V1 Build Progress
 
-Last completed step: L2.S006
+Last completed step: L2.S007
 Date: 2026-07-04
 Status: partial
 
@@ -33,7 +33,7 @@ Status: partial
   - [x] L2.S004 — Implement data_engine/ingest normalization
   - [x] L2.S005 — Implement data_engine/clean filters
   - [x] L2.S006 — Implement data_engine/compute pass-through (Decision: Thin pass-through since yfinance EOD data is pre-aggregated)
-  - [ ] L2.S007 — Store in database/market.db and end-to-end test
+  - [x] L2.S007 — Store in database/market.db and end-to-end test
   - [ ] L2.S008 — Log fundamentals/filings data deferral
   - [ ] L2.S009 — Defer or log news/NLP raw text feed availability
 - [ ] Layer 3 — Alpha/signal models
