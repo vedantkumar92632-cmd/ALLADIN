@@ -1,2 +1,4 @@
 # ARTHA V1 Dependency Manifest
 # Pinned libraries will be added here during resource mining / model implementation.
+tzdata==2026.2
+
