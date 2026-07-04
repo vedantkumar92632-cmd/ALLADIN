@@ -8,3 +8,15 @@ sqlite_db_path = "data/market.db"
 [broker]
 openalgo_api_url = "http://localhost:5000"
 openalgo_api_key = "your-openalgo-key-here"
+
+[risk]
+max_position_size_pct = 0.05
+max_sector_exposure_pct = 0.20
+max_leverage = 1.0
+max_daily_drawdown_pct = 0.02
+max_weekly_drawdown_pct = 0.05
+max_portfolio_drawdown_pct = 0.10
+emergency_kill_switch_enabled = true
+consecutive_loss_limit = 5
+max_slippage_bps = 50
+
