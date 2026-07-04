@@ -17,6 +17,7 @@ class OHLCVBar:
     volume: float
     vwap: Optional[float] = None
     trade_count: Optional[int] = None
+    adj_close: Optional[float] = None
 
     def validate(self) -> bool:
         """

@@ -57,7 +57,8 @@ def ingest_raw_data(df: pd.DataFrame) -> List[OHLCVBar]:
                 close_price=float(row['Close']),
                 volume=float(row['Volume']),
                 vwap=float(row['VWAP']) if 'VWAP' in row and not pd.isna(row['VWAP']) else None,
-                trade_count=int(row['TradeCount']) if 'TradeCount' in row and not pd.isna(row['TradeCount']) else None
+                trade_count=int(row['TradeCount']) if 'TradeCount' in row and not pd.isna(row['TradeCount']) else None,
+                adj_close=float(row['AdjClose']) if 'AdjClose' in row and not pd.isna(row['AdjClose']) else None
             )
             
             if bar.validate():

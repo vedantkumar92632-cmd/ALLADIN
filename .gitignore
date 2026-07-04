@@ -142,3 +142,12 @@ cython_debug/
 *.njsproj
 *.sln
 *.sw?
+
+# Local database files
+data/*.db
+data/*.db-wal
+data/*.db-shm
+
+# Reference document
+MASTER_REFERENCE.md
+
