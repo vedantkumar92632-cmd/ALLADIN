@@ -1,6 +1,6 @@
 ## ARTHA V1 Build Progress
 
-Last completed step: L2.S004
+Last completed step: L2.S005
 Date: 2026-07-04
 Status: partial
 
@@ -31,7 +31,7 @@ Status: partial
   - [x] L2.S002 — Implement adapters/data_feeds/yfinance_adapter
   - [x] L2.S003 — Implement input/market_data OHLCV schema
   - [x] L2.S004 — Implement data_engine/ingest normalization
-  - [ ] L2.S005 — Implement data_engine/clean filters
+  - [x] L2.S005 — Implement data_engine/clean filters
   - [ ] L2.S006 — Implement data_engine/compute pass-through
   - [ ] L2.S007 — Store in database/market.db and end-to-end test
   - [ ] L2.S008 — Log fundamentals/filings data deferral
