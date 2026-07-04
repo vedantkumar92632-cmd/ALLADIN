@@ -62,6 +62,7 @@ def fetch_ohlcv(
                 df_ticker = df
                 
             for idx, row in df_ticker.dropna(subset=['Close']).iterrows():
+                adj_close = float(row['Adj Close']) if 'Adj Close' in row and not pd.isna(row['Adj Close']) else float(row['Close'])
                 records.append({
                     'Date': idx,
                     'Ticker': ticker,
@@ -69,7 +70,8 @@ def fetch_ohlcv(
                     'High': float(row['High']),
                     'Low': float(row['Low']),
                     'Close': float(row['Close']),
-                    'Volume': float(row['Volume'])
+                    'Volume': float(row['Volume']),
+                    'AdjClose': adj_close
                 })
         else:
             # MultiIndex columns for multiple tickers
@@ -83,6 +85,7 @@ def fetch_ohlcv(
                     continue
                     
                 for idx, row in df_ticker.dropna(subset=['Close']).iterrows():
+                    adj_close = float(row['Adj Close']) if 'Adj Close' in row and not pd.isna(row['Adj Close']) else float(row['Close'])
                     records.append({
                         'Date': idx,
                         'Ticker': ticker,
@@ -90,7 +93,8 @@ def fetch_ohlcv(
                         'High': float(row['High']),
                         'Low': float(row['Low']),
                         'Close': float(row['Close']),
-                        'Volume': float(row['Volume'])
+                        'Volume': float(row['Volume']),
+                        'AdjClose': adj_close
                     })
                     
         result_df = pd.DataFrame(records)
