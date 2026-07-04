@@ -1,6 +1,6 @@
 ## ARTHA V1 Build Progress
 
-Last completed step: L1.S001
+Last completed step: L1.S002
 Date: 2026-07-04
 Status: partial
 
@@ -17,7 +17,8 @@ Status: partial
   - [x] L0.S006 — Read Section 3 of this document Part 1 (Agent Operating Manual)
 - [/] Layer 1 — Core infra
   - [x] L1.S001 — Implement core/logger
-  - [ ] L1.S002 — Implement core/time_utils
+  - [x] L1.S002 — Implement core/time_utils
+  - [ ] L1.S003 — Implement config/settings
 - [ ] Layer 2 — Data ingestion
 - [ ] Layer 3 — Alpha/signal models
 - [ ] Layer 4 — Risk management
