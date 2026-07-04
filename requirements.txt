@@ -1,4 +1,8 @@
 # ARTHA V1 Dependency Manifest
 # Pinned libraries will be added here during resource mining / model implementation.
 tzdata==2026.2
+yfinance==1.5.1
+pandas==3.0.3
+numpy==2.5.0
+
 
