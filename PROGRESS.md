@@ -1,6 +1,6 @@
 ## ARTHA V1 Build Progress
 
-Last completed step: L2.S002
+Last completed step: L2.S003
 Date: 2026-07-04
 Status: partial
 
@@ -29,7 +29,7 @@ Status: partial
 - [/] Layer 2 — Data ingestion
   - [x] L2.S001 — Analyze and decide on yfinance dependency
   - [x] L2.S002 — Implement adapters/data_feeds/yfinance_adapter
-  - [ ] L2.S003 — Implement input/market_data OHLCV schema
+  - [x] L2.S003 — Implement input/market_data OHLCV schema
   - [ ] L2.S004 — Implement data_engine/ingest normalization
   - [ ] L2.S005 — Implement data_engine/clean filters
   - [ ] L2.S006 — Implement data_engine/compute pass-through
