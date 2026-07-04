@@ -1,8 +1,8 @@
 ## ARTHA V1 Build Progress
 
-Last completed step: L2.S008
+Last completed step: L2.S009
 Date: 2026-07-04
-Status: partial
+Status: done
 
 ### Currently blocked on (if any):
 - None
@@ -26,7 +26,7 @@ Status: partial
   - [x] L1.S008 — Implement engine/cache
   - [x] L1.S009 — Implement engine/kernel
   - [x] L1.S010 — Implement database/connection (Decision: Four separate database files for isolation)
-- [/] Layer 2 — Data ingestion
+- [x] Layer 2 — Data ingestion
   - [x] L2.S001 — Analyze and decide on yfinance dependency
   - [x] L2.S002 — Implement adapters/data_feeds/yfinance_adapter
   - [x] L2.S003 — Implement input/market_data OHLCV schema
@@ -35,8 +35,17 @@ Status: partial
   - [x] L2.S006 — Implement data_engine/compute pass-through (Decision: Thin pass-through since yfinance EOD data is pre-aggregated)
   - [x] L2.S007 — Store in database/market.db and end-to-end test
   - [x] L2.S008 — Log fundamentals/filings data deferral
-  - [ ] L2.S009 — Defer or log news/NLP raw text feed availability
-- [ ] Layer 3 — Alpha/signal models
+  - [x] L2.S009 — Defer or log news/NLP raw text feed availability
+- [/] Layer 3 — Alpha/signal models
+  - [ ] L3.S001 — Analyze technical indicator library choices
+  - [ ] L3.S002 — Implement strategy/indicators module
+  - [ ] L3.S003 — Implement strategy/base_strategy interface
+  - [ ] L3.S004 — Implement Trend Following strategy
+  - [ ] L3.S005 — Implement Mean Reversion strategy
+  - [ ] L3.S006 — Implement signal consolidation logic
+  - [ ] L3.S007 — Store signals in database/signals.db
+  - [ ] L3.S008 — Implement signal generator runner
+  - [ ] L3.S009 — Complete Layer 3 integration test
 - [ ] Layer 4 — Risk management
 - [ ] Layer 5 — Portfolio construction
 - [ ] Layer 6 — Decision layer
