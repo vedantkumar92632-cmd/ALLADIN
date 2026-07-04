@@ -1,6 +1,6 @@
 ## ARTHA V1 Build Progress
 
-Last completed step: L1.S008
+Last completed step: L1.S009
 Date: 2026-07-04
 Status: partial
 
@@ -24,7 +24,8 @@ Status: partial
   - [x] L1.S006 — Implement engine/message_bus
   - [x] L1.S007 — Implement engine/clock
   - [x] L1.S008 — Implement engine/cache
-  - [ ] L1.S009 — Implement engine/kernel
+  - [x] L1.S009 — Implement engine/kernel
+  - [ ] L1.S010 — Implement database/connection
 - [ ] Layer 2 — Data ingestion
 - [ ] Layer 3 — Alpha/signal models
 - [ ] Layer 4 — Risk management
