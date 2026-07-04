@@ -29,10 +29,13 @@ class Kernel:
         cache.set("system_heartbeat", time.time())
         logger.info("Cache verified.")
 
+        # 3. Log data domain deferrals
+        logger.info("Ingestion Deferral Notice: Domain 3 (Fundamentals/Filings) and Domain 4 (News/NLP text feeds) are deferred under the current build scope (V1 EOD focus).")
+
         self.is_running = True
         logger.info("ARTHA V1 Kernel booted successfully.")
 
-        # 3. Publish SystemStartedEvent
+        # 4. Publish SystemStartedEvent
         env = settings.get("general.env", "development")
         message_bus.publish(SystemStartedEvent(env=env))
 
