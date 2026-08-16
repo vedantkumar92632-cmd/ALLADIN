@@ -1,6 +1,6 @@
-# ARTHA V1
+# ALLADIN V1
 
-ARTHA V1 is a multi-layered quantitative trading system. It includes data ingestion, alpha signal models, regime detection, volatility analysis, mean reversion, NLP sentiment parsing, portfolio construction, risk management, and execution modules.
+ALLADIN V1 is a multi-layered quantitative trading system. It includes data ingestion, alpha signal models, regime detection, volatility analysis, mean reversion, NLP sentiment parsing, portfolio construction, risk management, and execution modules.
 
 ## Project Structure
 The project is organized in the following components:

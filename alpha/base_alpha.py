@@ -1,5 +1,5 @@
 """
-Abstract base class for all alpha models in ARTHA V1.
+Abstract base class for all alpha models in ALLADIN V1.
 
 Every alpha model (CatBoost, LightGBM, regime detectors, vol models, etc.)
 must implement this interface so they can be swapped, ensembled, and orchestrated

@@ -1,4 +1,4 @@
-# ARTHA V1 — Strategy Registry
+# ALLADIN V1 — Strategy Registry
 
 **Rule**: All externally-sourced strategies are numbered `Strategy N`.
 Founder-originated strategies get a founder-chosen name. See ADDENDUM in MASTER_REFERENCE.md.

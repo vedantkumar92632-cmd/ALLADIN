@@ -1,5 +1,5 @@
 """
-ARTHA V1 - Main Orchestrator
+ALLADIN V1 - Main Orchestrator
 ==============================
 
 Wires all system components through the Kernel/MessageBus event-driven
@@ -12,7 +12,7 @@ architecture. Supports two modes:
                    through OMS in paper mode (no real capital).
 
 Usage:
-    cd c:\\Users\\vedan\\OneDrive\\Desktop\\artha
+    cd c:\\Users\\vedan\\OneDrive\\Desktop\\alladin
 
     # Backtest mode (default):
     .venv\\Scripts\\python main.py --mode backtest --tickers RELIANCE.NS TCS.NS INFY.NS
@@ -94,9 +94,9 @@ logger = get_logger("main")
 # =====================================================================
 # ORCHESTRATOR CLASS
 # =====================================================================
-class ArthaOrchestrator:
+class AlladinOrchestrator:
     """
-    Wires all ARTHA V1 components through the MessageBus.
+    Wires all ALLADIN V1 components through the MessageBus.
 
     Flow:
         Data -> MarketDataEvent -> Alpha Models -> SignalEvent
@@ -292,7 +292,7 @@ class ArthaOrchestrator:
     def run_backtest(self):
         """Run full backtest with validation."""
         print("\n" + "=" * 60)
-        print("  ARTHA V1 - BACKTEST MODE")
+        print("  ALLADIN V1 - BACKTEST MODE")
         print("=" * 60)
 
         # Step 1: Data
@@ -374,7 +374,7 @@ class ArthaOrchestrator:
     def run_paper_session(self):
         """Run one paper trading session (latest data -> signals -> orders)."""
         print("\n" + "=" * 60)
-        print("  ARTHA V1 - PAPER TRADING SESSION")
+        print("  ALLADIN V1 - PAPER TRADING SESSION")
         print("=" * 60)
 
         # Step 1: Data
@@ -434,7 +434,7 @@ class ArthaOrchestrator:
 # =====================================================================
 def main():
     parser = argparse.ArgumentParser(
-        description="ARTHA V1 Trading System",
+        description="ALLADIN V1 Trading System",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="NO LIVE TRADING. Paper mode only. Founder decides go-live."
     )
@@ -458,7 +458,7 @@ def main():
     kernel.start()
 
     try:
-        orchestrator = ArthaOrchestrator(
+        orchestrator = AlladinOrchestrator(
             tickers=args.tickers,
             lookback_days=args.lookback,
         )

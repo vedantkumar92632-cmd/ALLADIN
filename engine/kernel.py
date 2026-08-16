@@ -18,7 +18,7 @@ class Kernel:
             logger.warning("Kernel is already running.")
             return
 
-        logger.info("Booting ARTHA V1 Kernel...")
+        logger.info("Booting ALLADIN V1 Kernel...")
         
         # 1. Initialize clock mode from settings
         clock_mode = settings.get("clock.mode", "LIVE")
@@ -33,7 +33,7 @@ class Kernel:
         logger.info("Ingestion Deferral Notice: Domain 3 (Fundamentals/Filings) and Domain 4 (News/NLP text feeds) are deferred under the current build scope (V1 EOD focus).")
 
         self.is_running = True
-        logger.info("ARTHA V1 Kernel booted successfully.")
+        logger.info("ALLADIN V1 Kernel booted successfully.")
 
         # 4. Publish SystemStartedEvent
         env = settings.get("general.env", "development")
@@ -45,13 +45,13 @@ class Kernel:
             logger.warning("Kernel is not running.")
             return
 
-        logger.info(f"Shutting down ARTHA V1 Kernel... Reason: {reason}")
+        logger.info(f"Shutting down ALLADIN V1 Kernel... Reason: {reason}")
         
         # Publish SystemStoppedEvent before shutting down
         message_bus.publish(SystemStoppedEvent(reason=reason))
 
         self.is_running = False
-        logger.info("ARTHA V1 Kernel shut down cleanly.")
+        logger.info("ALLADIN V1 Kernel shut down cleanly.")
 
 # Global kernel instance
 kernel = Kernel()

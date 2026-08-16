@@ -3,7 +3,7 @@ Ornstein-Uhlenbeck (OU) process for mean reversion signal generation.
 
 Provides the half-life of a spread — the critical parameter that tells you
 how long the spread takes to revert. If half-life < 1 day or > 100 trading days,
-the pair is NOT tradeable in ARTHA's framework.
+the pair is NOT tradeable in ALLADIN's framework.
 
 MLE estimation of (mu, theta, sigma) gives better parameters than simple regression.
 
@@ -28,7 +28,7 @@ class OUProcess(BaseAlpha):
     Estimates OU parameters (mu, theta, sigma) via MLE, computes half-life,
     and generates z-score signals for pairs trading entry/exit.
     
-    Half-life sweet spot for ARTHA daily rebalancing: 5-30 trading days.
+    Half-life sweet spot for ALLADIN daily rebalancing: 5-30 trading days.
     """
 
     @property

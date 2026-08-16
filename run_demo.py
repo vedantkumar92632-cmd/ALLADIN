@@ -1,11 +1,11 @@
 """
-ARTHA V1 — Quick-Start Runner
+ALLADIN V1 — Quick-Start Runner
 ==============================
 
 Run this to verify the full system works end-to-end.
 
 Usage:
-    cd c:\\Users\\vedan\\OneDrive\\Desktop\\artha
+    cd c:\\Users\\vedan\\OneDrive\\Desktop\\alladin
     .venv\\Scripts\\python run_demo.py
 
 What it does:
