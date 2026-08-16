@@ -1,6 +1,7 @@
 import os
 import tomllib
 from typing import Any, Dict
+import logging
 
 def _load_env(filepath: str = ".env"):
     """Parse .env file and set environment variables if not already set."""
@@ -85,9 +86,15 @@ class Settings:
                     if isinstance(default_val, bool):
                         self._settings[section][key] = env_val.lower() in ("true", "1", "yes")
                     elif isinstance(default_val, int):
-                        self._settings[section][key] = int(env_val)
+                        try:
+                            self._settings[section][key] = int(env_val)
+                        except ValueError:
+                            logging.warning(f"Invalid int value for {env_key}: {env_val}")
                     elif isinstance(default_val, float):
-                        self._settings[section][key] = float(env_val)
+                        try:
+                            self._settings[section][key] = float(env_val)
+                        except ValueError:
+                            logging.warning(f"Invalid float value for {env_key}: {env_val}")
                     else:
                         self._settings[section][key] = env_val
 

@@ -1,0 +1,158 @@
+"""
+ATR-based dynamic stop-loss calculation (L4.S004).
+
+Adapts stop distance to current volatility rather than using a fixed percentage.
+Directly prevents stop-hunting in high-volatility regimes.
+
+Per Part 3A:
+- Period: 14 days (standard) or 20 days for less reactive stops
+- Multiplier: 2.0-3.0x ATR for NSE stocks (wider than US due to higher vol)
+- NSE has circuit breakers at +/-10%/+/-20% — factor in when setting stops
+
+Resources:
+- QuantInsti: ATR-based stop-loss implementation, Indian market examples
+"""
+import numpy as np
+import pandas as pd
+from typing import Optional
+from core.logger import get_logger
+
+logger = get_logger("risk.pre_trade")
+
+
+def compute_atr(
+    high: pd.Series,
+    low: pd.Series,
+    close: pd.Series,
+    period: int = 14,
+) -> pd.Series:
+    """
+    Compute Average True Range (ATR).
+    
+    True Range = max(H-L, |H-C_prev|, |L-C_prev|)
+    ATR = rolling mean of True Range over `period` days.
+    
+    Args:
+        high: High prices.
+        low: Low prices.
+        close: Close prices.
+        period: ATR period (14 standard, 20 for less reactive).
+        
+    Returns:
+        Series of ATR values.
+    """
+    prev_close = close.shift(1)
+    
+    tr1 = high - low
+    tr2 = (high - prev_close).abs()
+    tr3 = (low - prev_close).abs()
+    
+    true_range = pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
+    atr = true_range.rolling(window=period, min_periods=1).mean()
+    
+    return atr
+
+
+def atr_stop_distance(
+    high: pd.Series,
+    low: pd.Series,
+    close: pd.Series,
+    multiplier: float = 2.5,
+    period: int = 14,
+) -> pd.Series:
+    """
+    Compute ATR-based stop distance per position.
+    
+    Stop distance = multiplier * ATR.
+    For NSE stocks, use multiplier 2.0-3.0 (wider than US due to higher vol).
+    
+    Args:
+        high: High prices.
+        low: Low prices.
+        close: Close prices.
+        multiplier: ATR multiplier (2.0-3.0 for NSE). Default 2.5.
+        period: ATR period.
+        
+    Returns:
+        Series of stop distances in price units.
+    """
+    atr = compute_atr(high, low, close, period)
+    stop_dist = multiplier * atr
+    return stop_dist
+
+
+def atr_stop_price(
+    high: pd.Series,
+    low: pd.Series,
+    close: pd.Series,
+    direction: str = "LONG",
+    multiplier: float = 2.5,
+    period: int = 14,
+) -> pd.Series:
+    """
+    Compute ATR-based stop price.
+    
+    LONG: stop = close - multiplier * ATR
+    SHORT: stop = close + multiplier * ATR
+    
+    NSE circuit breakers at +/-10%/+/-20% are factored in:
+    stop price is clamped to not exceed circuit breaker limits.
+    """
+    stop_dist = atr_stop_distance(high, low, close, multiplier, period)
+    
+    if direction.upper() == "LONG":
+        stop = close - stop_dist
+        # NSE lower circuit = close * 0.80 (20% circuit breaker)
+        lower_circuit = close * 0.80
+        stop = stop.clip(lower=lower_circuit)
+    else:
+        stop = close + stop_dist
+        # NSE upper circuit = close * 1.20
+        upper_circuit = close * 1.20
+        stop = stop.clip(upper=upper_circuit)
+    
+    return stop
+
+
+def pre_trade_check(
+    current_price: float,
+    atr_value: float,
+    multiplier: float = 2.5,
+    max_position_size_pct: float = 0.05,
+    portfolio_value: float = 100000.0,
+) -> dict:
+    """
+    Pre-trade risk check for a single position.
+    
+    Returns:
+        Dict with stop_price, stop_distance, max_shares, risk_per_share.
+    """
+    if current_price <= 0:
+        logger.error('Invalid price')
+        return {'approved': False, 'stop_distance': 0.0, 'stop_price_long': 0.0, 'stop_price_short': 0.0, 'risk_per_share': 0.0, 'max_shares': 0, 'max_loss': 0.0, 'max_loss_pct': 0.0}
+
+    stop_distance = multiplier * atr_value
+    risk_per_share = stop_distance
+    
+    # Max position value
+    max_position_value = portfolio_value * max_position_size_pct
+    max_shares = int(max_position_value / current_price)
+    
+    # Max loss if stopped out
+    max_loss = max_shares * risk_per_share
+    
+    result = {
+        'stop_distance': stop_distance,
+        'stop_price_long': current_price - stop_distance,
+        'stop_price_short': current_price + stop_distance,
+        'risk_per_share': risk_per_share,
+        'max_shares': max_shares,
+        'max_loss': max_loss,
+        'max_loss_pct': max_loss / portfolio_value if portfolio_value > 0 else 0,
+    }
+    
+    logger.info(
+        f"Pre-trade: price={current_price:.2f}, ATR={atr_value:.2f}, "
+        f"stop_dist={stop_distance:.2f}, max_shares={max_shares}"
+    )
+    return result

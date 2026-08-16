@@ -30,7 +30,7 @@ def load_risk_settings() -> RiskSettingsSchema:
         max_weekly_drawdown_pct=float(settings.get("risk.max_weekly_drawdown_pct", 0.05)),
         max_portfolio_drawdown_pct=float(settings.get("risk.max_portfolio_drawdown_pct", 0.10)),
         
-        emergency_kill_switch_enabled=bool(settings.get("risk.emergency_kill_switch_enabled", True)),
+        emergency_kill_switch_enabled=str(settings.get("risk.emergency_kill_switch_enabled", True)).lower() in ('true', '1', 'yes'),
         consecutive_loss_limit=int(settings.get("risk.consecutive_loss_limit", 5)),
         max_slippage_bps=int(settings.get("risk.max_slippage_bps", 50))
     )

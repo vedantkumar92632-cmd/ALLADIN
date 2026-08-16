@@ -39,7 +39,12 @@ class Cache:
 
     def exists(self, key: str) -> bool:
         """Check if a key exists in the cache and is not expired."""
-        return self.get(key) is not None
+        if key not in self._store:
+            return False
+        _, expiry = self._store[key]
+        if expiry is not None and time.time() > expiry:
+            return False
+        return True
 
     def clear(self):
         """Clear all entries from the cache."""

@@ -30,6 +30,7 @@ class MessageBus:
         # Also match subscribers to base Event class if any
         if event_type is not Event:
             handlers = list(handlers) + list(self._subscribers.get(Event, []))
+            handlers = list(dict.fromkeys(handlers))
             
         if not handlers:
             logger.debug(f"No subscribers registered for event {event_type.__name__}")

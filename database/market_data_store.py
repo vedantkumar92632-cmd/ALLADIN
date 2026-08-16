@@ -72,9 +72,15 @@ def save_ohlcv_bars(bars: List[OHLCVBar]):
 
 def load_ohlcv_bars(ticker: str, start_date: str, end_date: str) -> List[dict]:
     """Load OHLCV bars from market.db for a given ticker and ISO date range."""
-    # Convert date strings to start and end ISO format timestamps
-    start_ts = f"{start_date}T00:00:00"
-    end_ts = f"{end_date}T23:59:59"
+    # Parse date strings safely - handle both '2026-01-01' and '2026-01-01T15:30:00+05:30'
+    if 'T' in start_date:
+        start_ts = start_date.split('T')[0] + 'T00:00:00'
+    else:
+        start_ts = f"{start_date}T00:00:00"
+    if 'T' in end_date:
+        end_ts = end_date.split('T')[0] + 'T23:59:59'
+    else:
+        end_ts = f"{end_date}T23:59:59"
     
     conn = get_connection("market")
     try:

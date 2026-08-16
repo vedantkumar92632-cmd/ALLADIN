@@ -60,3 +60,15 @@ class SystemStoppedEvent(Event):
     """Event fired when the kernel is shutting down."""
     reason: str = "normal"
 
+@dataclass
+class HaltEvent(Event):
+    """
+    Event fired when a risk breach is detected — halts new entries automatically.
+    Per Part 1: drawdown breach must halt new entries in code, not be a dashboard
+    number a human has to notice. Other components subscribe to this via message bus.
+    """
+    reason: str = ""          # "daily_drawdown", "weekly_drawdown", "portfolio_drawdown", "circuit_breaker"
+    severity: str = "HALT"    # "HALT" (no new entries) or "EMERGENCY" (liquidate all)
+    threshold: float = 0.0    # The threshold that was breached
+    current_value: float = 0.0  # The current value that breached it
+

@@ -26,7 +26,7 @@ class JsonFormatter(logging.Formatter):
                            "module", "msecs", "message", "msg", "name", "pathname", 
                            "process", "processName", "relativeCreated", "stack_info", "thread", "threadName"):
                 log_record[key] = val
-        return json.dumps(log_record)
+        return json.dumps(log_record, default=str)
 
 def get_logger(name: str) -> logging.Logger:
     """

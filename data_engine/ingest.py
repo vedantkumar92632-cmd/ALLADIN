@@ -25,6 +25,12 @@ def ingest_raw_data(df: pd.DataFrame) -> List[OHLCVBar]:
         try:
             raw_date = row['Date']
             
+            if isinstance(raw_date, str):
+                try:
+                    raw_date = pd.to_datetime(raw_date).to_pydatetime()
+                except Exception:
+                    pass
+            
             # Handle conversion from pandas Timestamp, standard date, or datetime
             if isinstance(raw_date, pd.Timestamp):
                 raw_date = raw_date.to_pydatetime()
@@ -39,10 +45,13 @@ def ingest_raw_data(df: pd.DataFrame) -> List[OHLCVBar]:
                     else:
                         dt_ist = raw_date.replace(tzinfo=IST)
                 else:
-                    # Aware datetime: convert to IST and adjust midnight to 15:30:00 IST
-                    dt_ist = to_ist(raw_date)
-                    if dt_ist.time() == datetime.time(0, 0, 0):
-                        dt_ist = datetime.datetime.combine(dt_ist.date(), datetime.time(15, 30, 0), tzinfo=IST)
+                    # Aware datetime: check if original time is midnight (daily bar)
+                    # UTC 00:00 from Yahoo Finance = daily bar, set to IST market close
+                    original_utc_time = raw_date.astimezone(datetime.timezone.utc).time()
+                    if original_utc_time == datetime.time(0, 0, 0):
+                        dt_ist = datetime.datetime.combine(raw_date.date(), datetime.time(15, 30, 0), tzinfo=IST)
+                    else:
+                        dt_ist = to_ist(raw_date)
             else:
                 logger.warning(f"Unsupported date format at row {idx}: {raw_date}")
                 continue
