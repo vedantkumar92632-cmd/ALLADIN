@@ -156,3 +156,60 @@ def pre_trade_check(
         f"stop_dist={stop_distance:.2f}, max_shares={max_shares}"
     )
     return result
+
+
+class TrailingATRStop:
+    """
+    Trailing ATR-based stop-loss manager (L4.S004 / P2).
+    Tracks peak price achieved for LONG (or trough for SHORT) and moves stop monotonically.
+    Never moves stop loss level backwards.
+    """
+    def __init__(self, multiplier: float = 2.5):
+        self.multiplier = multiplier
+        self._peak_prices = {}
+        self._stop_levels = {}
+
+    def update_and_check(
+        self,
+        ticker: str,
+        current_price: float,
+        atr_value: float,
+        direction: str = "LONG",
+    ):
+        """
+        Update peak price and recalculate trailing stop level.
+        
+        Returns:
+            Tuple of (current_stop_level: float, is_stopped_out: bool).
+        """
+        if atr_value <= 0 or current_price <= 0:
+            return self._stop_levels.get(ticker, 0.0), False
+
+        stop_dist = self.multiplier * atr_value
+
+        if ticker not in self._peak_prices:
+            self._peak_prices[ticker] = current_price
+            initial_stop = current_price - stop_dist if direction.upper() == "LONG" else current_price + stop_dist
+            self._stop_levels[ticker] = initial_stop
+            return initial_stop, False
+
+        if direction.upper() == "LONG":
+            if current_price > self._peak_prices[ticker]:
+                self._peak_prices[ticker] = current_price
+                new_stop = current_price - stop_dist
+                self._stop_levels[ticker] = max(self._stop_levels[ticker], new_stop)
+            is_stopped = current_price <= self._stop_levels[ticker]
+        else:
+            if current_price < self._peak_prices[ticker]:
+                self._peak_prices[ticker] = current_price
+                new_stop = current_price + stop_dist
+                self._stop_levels[ticker] = min(self._stop_levels[ticker], new_stop)
+            is_stopped = current_price >= self._stop_levels[ticker]
+
+        return self._stop_levels[ticker], is_stopped
+
+    def reset(self, ticker: str):
+        """Reset trailing stop state when a position is closed."""
+        self._peak_prices.pop(ticker, None)
+        self._stop_levels.pop(ticker, None)
+

@@ -80,6 +80,7 @@ from backtest.engine import SimpleBacktest
 from backtest.validation.dsr_psr import probabilistic_sharpe_ratio, deflated_sharpe_ratio
 from backtest.validation.cpcv import combinatorial_purged_cv
 from backtest.validation.monte_carlo import monte_carlo_permutation_test
+from backtest.validation.tearsheet import generate_tearsheet
 
 # -- Execution --
 from execution.oms import OrderManager
@@ -357,8 +358,19 @@ class AlladinOrchestrator:
         print(f"      VaR  (95%): {var_95:.4%}")
         print(f"      CVaR (95%): {cvar_95:.4%}")
 
-        # Step 6: Summary
-        print("\n[6/6] Strategy summary...")
+        # Step 6: Summary & Tearsheet
+        print("\n[6/6] Strategy summary & tearsheet generation...")
+        mc_p = mc['p_value'] if 'mc' in locals() and isinstance(mc, dict) else 1.0
+        generate_tearsheet(
+            metrics=metrics,
+            psr=psr,
+            dsr=dsr,
+            mc_p_value=mc_p,
+            var_95=var_95,
+            cvar_95=cvar_95,
+            output_filepath="tearsheet.md"
+        )
+        print("      Saved tearsheet.md")
         print(f"      Strategies used: Strategy 3/4 (Vol), Strategy 7 (Regime)")
         print(f"      See STRATEGY_REGISTRY.md for full mapping")
 
